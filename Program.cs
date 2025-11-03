@@ -7,9 +7,14 @@ public class Entity
     private int maxAge;
     private int childCount;
 
+    // TODO: The numbers should always equal 100
+    // The chances of having X amount of children
+    private int[] childCountDistribution;
+
     public Entity()
     {
         Random rand = new Random();
+        childCountDistribution = new int[] { 10, 10, 26, 25, 29 };
 
         isFemale = rand.Next(2) == 0;
         maxAge = rand.Next(100);
@@ -17,7 +22,17 @@ public class Entity
 
         if (maxAge > 18 && isFemale == true)
         {
-            childCount = rand.Next(5);
+            int chance = rand.Next(100);
+            for(int i = 0; i < childCountDistribution.Count(); i++)
+            {
+                if (childCountDistribution[i] > chance)
+                {
+                    childCount = i;
+                    break;
+                } else {
+                    chance -= childCountDistribution[i];
+                }
+            }
         }
     }
 
