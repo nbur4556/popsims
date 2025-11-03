@@ -4,6 +4,19 @@
     return;
 }
 
+int genCount = 1;
+if (args.Length > 1)
+{
+    try
+    {
+        genCount = int.Parse(args[1]);
+    }
+    catch
+    {
+        Console.WriteLine($"Error: Unable to parse {args[1]} to int. Running 1 generation.");
+    }
+}
+
 int entityCount = 0;
 try
 {
@@ -15,22 +28,28 @@ catch
     return;
 }
 
-int totalChildren = 0;
-int totalFemale = 0;
-for (int i = 0; i < entityCount; i++)
+for (int i = 0; i < genCount; i++)
 {
-    Entity entity = new Entity();
-    Console.WriteLine($"{i}: {entity.StatDescription()}");
-    if(entity.isFemale)
-    {
-        totalFemale++;
-    }
-    totalChildren += entity.childCount;
-}
 
-Console.WriteLine($"Total Female: {totalFemale}");
-Console.WriteLine($"Total Male: {entityCount - totalFemale}");
-Console.WriteLine($"Total Children: {totalChildren}");
+    int totalChildren = 0;
+    int totalFemale = 0;
+    for (int j = 0; j < entityCount; j++)
+    {
+        Entity entity = new Entity();
+        if (entity.isFemale)
+        {
+            totalFemale++;
+        }
+        totalChildren += entity.childCount;
+    }
+
+    Console.WriteLine($"Generation: {i + 1}");
+    Console.WriteLine($"Total Female: {totalFemale}");
+    Console.WriteLine($"Total Male: {entityCount - totalFemale}");
+    Console.WriteLine($"Total Children: {totalChildren}");
+    Console.WriteLine("_____");
+    entityCount = totalChildren;
+}
 
 public class Entity
 {
