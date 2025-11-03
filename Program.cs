@@ -5,6 +5,7 @@ simulation.Run();
 
 public class Simulation
 {
+    public bool live = true;
     private int generations = 1;
     private int entities = 0;
 
@@ -14,6 +15,32 @@ public class Simulation
         {
             this.RunGeneration(i + 1);
         }
+
+        Console.WriteLine("Continue? (y or #)");
+        string? continueResponse = Console.ReadLine();
+        Console.WriteLine(continueResponse);
+        if (continueResponse == null)
+        {
+            return;
+        }
+        if (continueResponse == "y" || continueResponse == "Y")
+        {
+            //TODO: generations should continue instead of starting over
+            generations = 1;
+        }
+        else
+        {
+            try
+            {
+                //TODO: generations should continue instead of starting over
+                generations = int.Parse(continueResponse);
+            }
+            catch
+            {
+                return;
+            }
+        }
+        this.Run();
     }
 
     public void SetGenerations(string[] args)
