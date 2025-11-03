@@ -7,16 +7,17 @@ public class Simulation
 {
     public bool live = true;
     private int generations = 1;
+    private int generationsElapsed = 0;
     private int entities = 0;
 
     public void Run()
     {
         for (int i = 0; i < generations; i++)
         {
-            this.RunGeneration(i + 1);
+            this.RunGeneration();
         }
 
-        Console.WriteLine("Continue? (y or #)");
+        Console.WriteLine("Continue? (y or generation #)");
         string? continueResponse = Console.ReadLine();
         Console.WriteLine(continueResponse);
         if (continueResponse == null)
@@ -25,14 +26,12 @@ public class Simulation
         }
         if (continueResponse == "y" || continueResponse == "Y")
         {
-            //TODO: generations should continue instead of starting over
             generations = 1;
         }
         else
         {
             try
             {
-                //TODO: generations should continue instead of starting over
                 generations = int.Parse(continueResponse);
             }
             catch
@@ -80,7 +79,7 @@ public class Simulation
 
     }
 
-    private void RunGeneration(int currentGeneration)
+    private void RunGeneration()
     {
         int totalChildren = 0;
         int totalFemale = 0;
@@ -94,7 +93,7 @@ public class Simulation
             totalChildren += entity.childCount;
         }
 
-        Console.WriteLine($"Generation: {currentGeneration}");
+        Console.WriteLine($"Generation: {++generationsElapsed}");
         Console.WriteLine($"Total Female: {totalFemale}");
         Console.WriteLine($"Total Male: {entities - totalFemale}");
         Console.WriteLine($"Total Children: {totalChildren}");
