@@ -1,54 +1,79 @@
-﻿if (args.Length < 1)
-{
-    Console.WriteLine("Error: No argument provided for entityCount");
-    return;
-}
+﻿Simulation simulation = new Simulation();
+simulation.SetGenerations(args);
+simulation.SetEntities(args);
+simulation.Run();
 
-int genCount = 1;
-if (args.Length > 1)
+public class Simulation
 {
-    try
+    private int generations = 1;
+    private int entities = 0;
+
+    public void Run()
     {
-        genCount = int.Parse(args[1]);
-    }
-    catch
-    {
-        Console.WriteLine($"Error: Unable to parse {args[1]} to int. Running 1 generation.");
-    }
-}
-
-int entityCount = 0;
-try
-{
-    entityCount = int.Parse(args[0]);
-}
-catch
-{
-    Console.WriteLine($"Error: Unable to parse {args[0]} to int.");
-    return;
-}
-
-for (int i = 0; i < genCount; i++)
-{
-
-    int totalChildren = 0;
-    int totalFemale = 0;
-    for (int j = 0; j < entityCount; j++)
-    {
-        Entity entity = new Entity();
-        if (entity.isFemale)
+        for (int i = 0; i < generations; i++)
         {
-            totalFemale++;
+            this.RunGeneration(i + 1);
         }
-        totalChildren += entity.childCount;
     }
 
-    Console.WriteLine($"Generation: {i + 1}");
-    Console.WriteLine($"Total Female: {totalFemale}");
-    Console.WriteLine($"Total Male: {entityCount - totalFemale}");
-    Console.WriteLine($"Total Children: {totalChildren}");
-    Console.WriteLine("_____");
-    entityCount = totalChildren;
+    public void SetGenerations(string[] args)
+    {
+        if (args.Length < 2)
+        {
+            Console.WriteLine("Error: No argument for generations provided.");
+            return;
+        }
+
+        try
+        {
+            generations = int.Parse(args[1]);
+        }
+        catch
+        {
+            Console.WriteLine($"Error: Unable to parse {args[1]} to int for generations.");
+        }
+    }
+
+    public void SetEntities(string[] args)
+    {
+        if (args.Length < 1)
+        {
+            Console.WriteLine("Error: No argument for entities provided.");
+            return;
+        }
+
+        try
+        {
+            entities = int.Parse(args[0]);
+        }
+        catch
+        {
+            Console.WriteLine($"Error: Unable to parse {args[0]} to int for entities.");
+        }
+
+    }
+
+    private void RunGeneration(int currentGeneration)
+    {
+        int totalChildren = 0;
+        int totalFemale = 0;
+        for (int j = 0; j < entities; j++)
+        {
+            Entity entity = new Entity();
+            if (entity.isFemale)
+            {
+                totalFemale++;
+            }
+            totalChildren += entity.childCount;
+        }
+
+        Console.WriteLine($"Generation: {currentGeneration}");
+        Console.WriteLine($"Total Female: {totalFemale}");
+        Console.WriteLine($"Total Male: {entities - totalFemale}");
+        Console.WriteLine($"Total Children: {totalChildren}");
+        Console.WriteLine("_____");
+        entities = totalChildren;
+    }
 }
 
 public class Entity
