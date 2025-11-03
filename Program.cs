@@ -1,17 +1,25 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿Entity entity = new Entity();
+Console.WriteLine(entity.StatDescription());
 
 public class Entity
 {
-
     private bool isFemale;
+    private int maxAge;
 
     public Entity()
     {
         var rand = new Random();
-        for (int i = 0; i < 10; i++)
-        {
-            Console.WriteLine(rand.Next());
-        }
+        this.isFemale = rand.Next(2) == 0;
+        this.maxAge = rand.Next(100);
+    }
+
+    public String StatDescription()
+    {
+        string pattern = @"
+        [
+            isFemale: {0}   
+            maxAge: {1}
+        ]";
+        return string.Format(pattern, this.isFemale, this.maxAge);
     }
 }
