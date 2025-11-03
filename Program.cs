@@ -23,12 +23,10 @@ public class Entity
 
     public String StatDescription()
     {
-        string pattern = @"
-        [
-            isFemale: {0}   
-            maxAge: {1}
-            childCount: {2}
-        ]";
-        return string.Format(pattern, this.isFemale, this.maxAge, this.childCount);
+        return $@"[
+    isFemale: {isFemale}   
+    maxAge: {maxAge}
+    childCount: {childCount}
+]";
     }
 }
