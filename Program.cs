@@ -1,19 +1,42 @@
-﻿int entityCount = 24;
+﻿if (args.Length < 1)
+{
+    Console.WriteLine("Error: No argument provided for entityCount");
+    return;
+}
+
+int entityCount = 0;
+try
+{
+    entityCount = int.Parse(args[0]);
+}
+catch
+{
+    Console.WriteLine($"Error: Unable to parse {args[0]} to int.");
+    return;
+}
+
 int totalChildren = 0;
-for (int i = 0; i < 18; i++)
+int totalFemale = 0;
+for (int i = 0; i < entityCount; i++)
 {
     Entity entity = new Entity();
     Console.WriteLine($"{i}: {entity.StatDescription()}");
+    if(entity.isFemale)
+    {
+        totalFemale++;
+    }
     totalChildren += entity.childCount;
 }
 
+Console.WriteLine($"Total Female: {totalFemale}");
+Console.WriteLine($"Total Male: {entityCount - totalFemale}");
 Console.WriteLine($"Total Children: {totalChildren}");
 
 public class Entity
 {
-    public bool isFemale {get; private set;}
-    public int maxAge {get; private set;}
-    public int childCount {get; private set;}
+    public bool isFemale { get; private set; }
+    public int maxAge { get; private set; }
+    public int childCount { get; private set; }
 
     // TODO: The numbers should always equal 100
     // The chances of having X amount of children
