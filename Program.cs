@@ -1,11 +1,19 @@
-﻿Entity entity = new Entity();
-Console.WriteLine(entity.StatDescription());
+﻿int entityCount = 24;
+int totalChildren = 0;
+for (int i = 0; i < 18; i++)
+{
+    Entity entity = new Entity();
+    Console.WriteLine($"{i}: {entity.StatDescription()}");
+    totalChildren += entity.childCount;
+}
+
+Console.WriteLine($"Total Children: {totalChildren}");
 
 public class Entity
 {
-    private bool isFemale;
-    private int maxAge;
-    private int childCount;
+    public bool isFemale {get; private set;}
+    public int maxAge {get; private set;}
+    public int childCount {get; private set;}
 
     // TODO: The numbers should always equal 100
     // The chances of having X amount of children
@@ -23,13 +31,15 @@ public class Entity
         if (maxAge > 18 && isFemale == true)
         {
             int chance = rand.Next(100);
-            for(int i = 0; i < childCountDistribution.Count(); i++)
+            for (int i = 0; i < childCountDistribution.Count(); i++)
             {
                 if (childCountDistribution[i] > chance)
                 {
                     childCount = i;
                     break;
-                } else {
+                }
+                else
+                {
                     chance -= childCountDistribution[i];
                 }
             }
@@ -38,10 +48,6 @@ public class Entity
 
     public String StatDescription()
     {
-        return $@"[
-    isFemale: {isFemale}   
-    maxAge: {maxAge}
-    childCount: {childCount}
-]";
+        return $@"[isFemale: {isFemale}, maxAge: {maxAge}, childCount: {childCount}]";
     }
 }
