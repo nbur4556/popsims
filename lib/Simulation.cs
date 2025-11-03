@@ -14,7 +14,6 @@ public class Simulation
 
         Console.WriteLine("Continue? (y or generation #)");
         string? continueResponse = Console.ReadLine();
-        Console.WriteLine(continueResponse);
         if (continueResponse == null)
         {
             return;
